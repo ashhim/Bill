@@ -35,11 +35,14 @@
             color: #0066cc;
             font-weight: bold;
         }
+        .spinner-container {
+            position: relative;
+            display: inline-block;
+        }
         .spinner {
             margin: 0 auto 1.5em;
             width: 50px;
             height: 50px;
-            border-radius: 50%;
             position: relative;
             animation: jump 2s ease-in-out infinite;
         }
@@ -55,6 +58,37 @@
             left: 0;
             animation: spin 1s linear infinite;
         }
+        .checkmark {
+            display: none;
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: -30px; /* Move checkmark upwards */
+            left: 0;
+            background: transparent;
+            animation: jump 2s ease-in-out infinite;
+        }
+        .checkmark::before {
+            content: '';
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #4caf50;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .checkmark::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 10px;
+            border: 5px solid #fff;
+            border-width: 0 0 5px 5px;
+            transform: rotate(-45deg);
+            top: 14px;
+            left: 12px;
+        }
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
@@ -68,14 +102,27 @@
 <body>
     <div class="container">
         <h1>Downloading VkingsBills APK...</h1>
-        <div class="spinner"></div>
+        <div class="spinner-container">
+            <div class="spinner" id="spinner"></div>
+            <div class="checkmark" id="checkmark"></div>
+        </div>
         <p>If the download does not start automatically, <a id="download-link" href="VkingsBills.apk" download="VkingsBills.apk">click here</a>.</p>
     </div>
 
     <script>
         window.onload = function() {
             var link = document.getElementById('download-link');
+            var spinner = document.getElementById('spinner');
+            var checkmark = document.getElementById('checkmark');
+            
+            // Start download
             link.click();
+            
+            // Stop spinner and show checkmark after 5 seconds
+            setTimeout(function() {
+                spinner.style.display = 'none'; // Hide spinner
+                checkmark.style.display = 'block'; // Show checkmark
+            }, 5000); // Simulate download completion
         }
     </script>
 </body>
